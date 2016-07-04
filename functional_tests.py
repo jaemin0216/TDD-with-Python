@@ -11,10 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def check_for_now_in_list_table(self, row_text):
+    def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
+        self.browser.implicitly_wait(3)
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 에디스(Edith)는 멋진 작업 목록 온라인 앱이 나왔다는 소식을 듣고
@@ -47,6 +48,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('공작깃털을 이용해서 그물 만들기')
         inputbox.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(3)
 
         # 페이지는 다시 갱신되고, 두 개 아이템이 목록에 보인다
         self.check_for_row_in_list_table('2: 공작깃털을 이용해서 그물 만들기')
